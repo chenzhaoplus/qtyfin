@@ -9,6 +9,24 @@
                     <el-form-item label="股票代码：">
                         <el-input v-model="dataForm['stockCode']" placeholder="股票代码" clearable/>
                     </el-form-item>
+                    <el-form-item label="股票类型：">
+                        <el-select v-model="dataForm['stockType']" placeholder="请选择股票类型">
+                            <el-option label="请选择" value=""></el-option>
+                            <el-option label="5G概念" value="5G概念"></el-option>
+                            <el-option label="银行" value="银行"></el-option>
+                            <el-option label="券商" value="券商"></el-option>
+                            <el-option label="汽车" value="汽车"></el-option>
+                            <el-option label="充电桩" value="充电桩"></el-option>
+                            <el-option label="电器" value="电器"></el-option>
+                            <el-option label="环保工程" value="环保工程"></el-option>
+                            <el-option label="食品饮料" value="食品饮料"></el-option>
+                            <el-option label="保险" value="保险"></el-option>
+                            <el-option label="医药制造" value="医药制造"></el-option>
+                            <el-option label="医疗" value="医疗"></el-option>
+                            <el-option label="安防" value="安防"></el-option>
+                            <el-option label="软件" value="软件"></el-option>
+                        </el-select>
+                    </el-form-item>
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="startQuery()">查询</el-button>
                     </el-form-item>
@@ -107,6 +125,7 @@ export default {
         dataForm: {
           stockName:'',
           stockCode:'',
+          stockType:'',
         },
       }
     },
@@ -123,6 +142,7 @@ export default {
             this.dataForm = {
                 stockName:'',
                 stockCode:'',
+                stockType:'',
             }
             this.startQuery()
         },
