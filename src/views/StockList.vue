@@ -4,13 +4,13 @@
             <el-col>
                 <el-form :inline="true" size="mini" :model="dataForm" @keyup.enter.native="startQuery()">
                     <el-form-item label="股票名称：" >
-                        <el-input v-model="dataForm['stockName']" placeholder="股票名称" clearable/>
+                        <el-input v-model="dataForm['gpmc']" placeholder="股票名称" clearable/>
                     </el-form-item>
                     <el-form-item label="股票代码：">
-                        <el-input v-model="dataForm['stockCode']" placeholder="股票代码" clearable/>
+                        <el-input v-model="dataForm['gpdm']" placeholder="股票代码" clearable/>
                     </el-form-item>
                     <el-form-item label="股票类型：">
-                        <el-select v-model="dataForm['stockType']" placeholder="请选择股票类型">
+                        <el-select v-model="dataForm['gplx']" placeholder="请选择股票类型">
                             <el-option label="请选择" value=""></el-option>
                             <el-option label="5G概念" value="5G概念"></el-option>
                             <el-option label="银行" value="银行"></el-option>
@@ -42,47 +42,47 @@
                     @selection-change="handleSelectionChange" @sort-change="changeTableSort">
                     <el-table-column type="selection" width="50">
                     </el-table-column>
-                    <el-table-column prop="股票代码" label="股票代码" sortable="true" width="100" >
+                    <el-table-column prop="gpdm" label="股票代码" sortable="true" width="100" >
                     </el-table-column>
-                    <el-table-column prop="股票名称" label="股票名称" >
+                    <el-table-column prop="gpmc" label="股票名称" >
                     </el-table-column>
-                    <el-table-column prop="股票类型" label="股票类型" show-overflow-tooltip>
+                    <el-table-column prop="gplx" label="股票类型" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="最新价" label="最新价" show-overflow-tooltip>
+                    <el-table-column prop="zxj" label="最新价" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="总市值" label="总市值" show-overflow-tooltip>
+                    <el-table-column prop="zsz" label="总市值" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="每股收益" label="每股收益" show-overflow-tooltip>
+                    <el-table-column prop="mgsy" label="每股收益" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="净资产收益率-ROE" label="ROE" sortable="true" show-overflow-tooltip>
+                    <el-table-column prop="roe" label="ROE" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="成交量-手" label="成交量(手)" show-overflow-tooltip>
+                    <el-table-column prop="cjl_hand" label="成交量(手)" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="市盈率-动态" label="市盈率(动)" show-overflow-tooltip>
+                    <el-table-column prop="syl_dynamic" label="市盈率(动)" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="总资产" label="总资产" show-overflow-tooltip>
+                    <el-table-column prop="zzc" label="总资产" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="总负债" label="总负债" show-overflow-tooltip>
+                    <el-table-column prop="zfz" label="总负债" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="股东权益合计" label="股东权益合计" width="100" show-overflow-tooltip>
+                    <el-table-column prop="gdqyhj" label="股东权益合计" width="100" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="净利润同比" label="净利润同比" show-overflow-tooltip>
+                    <el-table-column prop="jlrtb" label="净利润同比" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="营收同比率" label="营收同比" show-overflow-tooltip>
+                    <el-table-column prop="ystbl" label="营收同比" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="总营收" label="总营收" show-overflow-tooltip>
+                    <el-table-column prop="zys" label="总营收" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="总利润" label="总利润" show-overflow-tooltip>
+                    <el-table-column prop="zlr" label="总利润" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="净利润" label="净利润" show-overflow-tooltip>
+                    <el-table-column prop="jlr" label="净利润" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="流动比率" label="流动比率" show-overflow-tooltip>
+                    <el-table-column prop="ldbl" label="流动比率" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="速动比率" label="速动比率" show-overflow-tooltip>
+                    <el-table-column prop="sdbl" label="速动比率" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="公司内在价值-净利润" label="公司内在价值(净)" show-overflow-tooltip>
+                    <el-table-column prop="gsnzjz_jlr" label="公司内在价值(净)" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="公司内在价值-营收" label="公司内在价值(营)" show-overflow-tooltip>
+                    <el-table-column prop="gsnzjz_ys" label="公司内在价值(营)" show-overflow-tooltip>
                     </el-table-column>
                 </el-table>
             </el-col>
@@ -123,9 +123,9 @@ export default {
         limit: 10,                  // 每页数
         multipleSelection: [],
         dataForm: {
-          stockName:'',
-          stockCode:'',
-          stockType:'',
+          gpmc:'',
+          gpdm:'',
+          gplx:'',
         },
       }
     },
@@ -140,9 +140,9 @@ export default {
         },
         clear () {
             this.dataForm = {
-                stockName:'',
-                stockCode:'',
-                stockType:'',
+                gpmc:'',
+                gpdm:'',
+                gplx:'',
             }
             this.startQuery()
         },
