@@ -10,21 +10,20 @@
                         <el-input v-model="dataForm['gpdm']" placeholder="股票代码" clearable/>
                     </el-form-item>
                     <el-form-item label="股票类型：">
-                        <el-select v-model="dataForm['gplx']" placeholder="请选择股票类型">
-                            <el-option label="请选择" value=""></el-option>
-                            <el-option label="5G概念" value="5G概念"></el-option>
-                            <el-option label="银行" value="银行"></el-option>
-                            <el-option label="券商" value="券商"></el-option>
-                            <el-option label="汽车" value="汽车"></el-option>
-                            <el-option label="充电桩" value="充电桩"></el-option>
-                            <el-option label="电器" value="电器"></el-option>
-                            <el-option label="环保工程" value="环保工程"></el-option>
-                            <el-option label="食品饮料" value="食品饮料"></el-option>
-                            <el-option label="保险" value="保险"></el-option>
-                            <el-option label="医药制造" value="医药制造"></el-option>
-                            <el-option label="医疗" value="医疗"></el-option>
-                            <el-option label="安防" value="安防"></el-option>
-                            <el-option label="软件" value="软件"></el-option>
+                        <el-select v-model="dataForm['gplx']" 
+                            filterable 
+                            placeholder="请输入股票类型" 
+                            remote
+                            clearable
+                            @change="currentSel"
+                            reserve-keyword
+                            :remote-method="searchGplx">
+                            <el-option
+                                v-for="item in gplxList"
+                                :key="item.gplx"
+                                :label="item.gplx"
+                                :value="item.gplx">
+                            </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
@@ -127,13 +126,35 @@ export default {
           gpdm:'',
           gplx:'',
         },
+        gplxList: [],
       }
     },
     created: function () { 
         console.log('from stocklist')
         this.getDataList()
+        this.gplxList = this.searchGplx('')
     },
     methods: {
+        currentSel(selVal) {
+            this.selectid=selVal
+        },
+        searchGplx(query){
+            this.dataListLoading = true
+            axios({
+                url: '/findGplxAll',
+                method: 'post',
+                data: {
+                    gplx: query
+                },
+                headers: { 'content-type': 'application/json' }
+            }).then(res => {
+                this.gplxList = res.data
+                this.dataListLoading = false
+            }).catch(() => {
+                this.gplxList = []
+                this.dataListLoading = false
+            })
+        },
         startQuery () {
             this.pageNum = 1
             this.getDataList()
