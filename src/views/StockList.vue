@@ -2,7 +2,20 @@
     <div>
         <el-row>
             <el-col>
-                <el-button @click="getDataList">查询</el-button>
+                <el-form :inline="true" size="mini" :model="dataForm" @keyup.enter.native="startQuery()">
+                    <el-form-item label="股票名称：" >
+                        <el-input v-model="dataForm['stockName']" placeholder="股票名称" clearable/>
+                    </el-form-item>
+                    <el-form-item label="股票代码：">
+                        <el-input v-model="dataForm['stockCode']" placeholder="股票代码" clearable/>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" icon="el-icon-search" @click="startQuery()">查询</el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button @click="clear" icon="el-icon-refresh" >重置</el-button>
+                    </el-form-item>
+                </el-form>
             </el-col>
         </el-row>
         <el-row>
@@ -91,6 +104,10 @@ export default {
         pageNum: 1,                    // 当前页码
         limit: 10,                  // 每页数
         multipleSelection: [],
+        dataForm: {
+          stockName:'',
+          stockCode:'',
+        },
       }
     },
     created: function () { 
@@ -98,6 +115,17 @@ export default {
         this.getDataList()
     },
     methods: {
+        startQuery () {
+            this.pageNum = 1
+            this.getDataList()
+        },
+        clear () {
+            this.dataForm = {
+                stockName:'',
+                stockCode:'',
+            }
+            this.startQuery()
+        },
         getDataList () {
             this.dataListLoading = true
             axios({
@@ -108,7 +136,7 @@ export default {
                     sort: this.orderField,
                     pageNum: this.pageNum,
                     pageSize: this.limit,
-                    // ...this.dataForm
+                    ...this.dataForm,
                 },
                 headers: { 'content-type': 'application/json' }
             }).then(res => {
