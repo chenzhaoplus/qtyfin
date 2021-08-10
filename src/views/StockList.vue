@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form :inline="true" size="mini" :model="dataForm" @keyup.enter.native="startQuery()">
-            <el-row>
+            <el-row style="text-align: left;">
                 <el-col>
                     <el-form-item label="股票名称：" >
                         <el-input v-model="dataForm['gpmc']" placeholder="股票名称" clearable/>
@@ -56,7 +56,7 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row style="text-align: left;">
                 <el-col>
                     <el-form-item label="总市值(亿)：">
                         <el-input-number v-model="dataForm['zszLow']" 
@@ -94,19 +94,19 @@
                     </el-table-column>
                     <el-table-column prop="zsz" label="总市值" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="mgsy" label="每股收益" show-overflow-tooltip>
+                    <el-table-column prop="mgsy" label="每股收益" sortable="true"  width="100" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="roe" label="ROE" sortable="true" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="cjl_hand" label="成交量(手)" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="syl_dynamic" label="市盈率(动)" show-overflow-tooltip>
+                    <el-table-column prop="syl_dynamic" label="市盈率(动)" sortable="true" width="100" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zzc" label="总资产" show-overflow-tooltip>
+                    <el-table-column prop="zzc" label="总资产" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zfz" label="总负债" show-overflow-tooltip>
+                    <el-table-column prop="zfz" label="总负债" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="gdqyhj" label="股东权益合计" width="100" show-overflow-tooltip>
+                    <el-table-column prop="gdqyhj" label="股东权益合计" sortable="true" width="120" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="jlrtb" label="净利润同比" sortable="true" width="110" show-overflow-tooltip>
                     </el-table-column>
@@ -118,9 +118,9 @@
                     </el-table-column>
                     <el-table-column prop="jlr" label="净利润" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="ldbl" label="流动比率" show-overflow-tooltip>
+                    <el-table-column prop="ldbl" label="流动比率" sortable="true" width="100" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="sdbl" label="速动比率" show-overflow-tooltip>
+                    <el-table-column prop="sdbl" label="速动比率" sortable="true" width="100" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="gsnzjz_jlr" label="公司内在价值(净)" sortable="true" width="140" show-overflow-tooltip>
                     </el-table-column>
@@ -150,15 +150,15 @@
 <script>
 const axios = require('axios')
 const dataFormInit = {
-          gpmc:'',
-          gpdm:'',
-          gplx:'',
-          zxjLow: 0,
-          zxjHigh: 30,
-          zszLow: 0,
-          zszHigh: 200,
-          gp_report: '2021_07_31',
-        }
+    gpmc:'',
+    gpdm:'',
+    gplx:'',
+    zxjLow: 0,
+    zxjHigh: 30,
+    zszLow: 300,
+    zszHigh: undefined,
+    gp_report: '2021_07_31',
+}
 export default {
     name: 'stocklist',
     data () {
