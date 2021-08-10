@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-row>
-            <el-col>
-                <el-form :inline="true" size="mini" :model="dataForm" @keyup.enter.native="startQuery()">
+        <el-form :inline="true" size="mini" :model="dataForm" @keyup.enter.native="startQuery()">
+            <el-row>
+                <el-col>
                     <el-form-item label="股票名称：" >
                         <el-input v-model="dataForm['gpmc']" placeholder="股票名称" clearable/>
                     </el-form-item>
@@ -26,15 +26,58 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="股票报表：">
+                        <el-select v-model="dataForm['gp_report']" 
+                            filterable 
+                            placeholder="请输入股票报表日期" 
+                            remote
+                            clearable
+                            @change="currentSel"
+                            reserve-keyword
+                            :remote-method="searchGpReport">
+                            <el-option
+                                v-for="item in reportList"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="股价：">
+                        <el-input-number v-model="dataForm['zxjLow']" 
+                            :max="dataForm['zxjHigh']" 
+                            :controls="false" 
+                            style="width: 5rem;"></el-input-number>
+                        <span >~</span>
+                        <el-input-number v-model="dataForm['zxjHigh']" 
+                            :min="dataForm['zxjLow']"
+                            :controls="false"
+                            style="width: 5rem;" ></el-input-number>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col>
+                    <el-form-item label="总市值(亿)：">
+                        <el-input-number v-model="dataForm['zszLow']" 
+                            :max="dataForm['zszHigh']" 
+                            :controls="false" 
+                            style="width: 5rem;"></el-input-number>
+                        <span >~</span>
+                        <el-input-number v-model="dataForm['zszHigh']" 
+                            :min="dataForm['zszLow']"
+                            :controls="false"
+                            style="width: 5rem;" ></el-input-number>
+                    </el-form-item>
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="startQuery()">查询</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="clear" icon="el-icon-refresh" >重置</el-button>
                     </el-form-item>
-                </el-form>
-            </el-col>
-        </el-row>
+                </el-col>
+            </el-row>
+        </el-form>
         <el-row>
             <el-col>
                 <el-table ref="multipleTable" :data="dataList" height="650" tooltip-effect="dark" style="width: 100%"
@@ -47,9 +90,9 @@
                     </el-table-column>
                     <el-table-column prop="gplx" label="股票类型" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zxj" label="最新价" show-overflow-tooltip>
+                    <el-table-column prop="zxj" label="股价" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zsz" label="总市值" show-overflow-tooltip>
+                    <el-table-column prop="zsz" label="总市值" sortable="true" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="mgsy" label="每股收益" show-overflow-tooltip>
                     </el-table-column>
@@ -65,23 +108,23 @@
                     </el-table-column>
                     <el-table-column prop="gdqyhj" label="股东权益合计" width="100" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="jlrtb" label="净利润同比" show-overflow-tooltip>
+                    <el-table-column prop="jlrtb" label="净利润同比" sortable="true" width="110" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="ystbl" label="营收同比" show-overflow-tooltip>
+                    <el-table-column prop="ystbl" label="营收同比" sortable="true" width="100" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zys" label="总营收" show-overflow-tooltip>
+                    <el-table-column prop="zys" label="总营收" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="zlr" label="总利润" show-overflow-tooltip>
+                    <el-table-column prop="zlr" label="总利润" sortable="true" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="jlr" label="净利润" show-overflow-tooltip>
+                    <el-table-column prop="jlr" label="净利润" sortable="true" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="ldbl" label="流动比率" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="sdbl" label="速动比率" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="gsnzjz_jlr" label="公司内在价值(净)" show-overflow-tooltip>
+                    <el-table-column prop="gsnzjz_jlr" label="公司内在价值(净)" sortable="true" width="140" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="gsnzjz_ys" label="公司内在价值(营)" show-overflow-tooltip>
+                    <el-table-column prop="gsnzjz_ys" label="公司内在价值(营)" sortable="true" width="140" show-overflow-tooltip>
                     </el-table-column>
                 </el-table>
             </el-col>
@@ -106,6 +149,16 @@
 
 <script>
 const axios = require('axios')
+const dataFormInit = {
+          gpmc:'',
+          gpdm:'',
+          gplx:'',
+          zxjLow: 0,
+          zxjHigh: 30,
+          zszLow: 0,
+          zszHigh: 200,
+          gp_report: '2021_07_31',
+        }
 export default {
     name: 'stocklist',
     data () {
@@ -121,18 +174,17 @@ export default {
         pageNum: 1,                    // 当前页码
         limit: 10,                  // 每页数
         multipleSelection: [],
-        dataForm: {
-          gpmc:'',
-          gpdm:'',
-          gplx:'',
-        },
+        dataForm: dataFormInit,
         gplxList: [],
+        reportList: [],
       }
     },
     created: function () { 
         console.log('from stocklist')
         this.getDataList()
         this.gplxList = this.searchGplx('')
+        this.reportList = this.searchGpReport('')
+        this.dataForm['gp_report'] = this.reportList[0]
     },
     methods: {
         currentSel(selVal) {
@@ -155,16 +207,29 @@ export default {
                 this.dataListLoading = false
             })
         },
+        searchGpReport(query){
+            this.dataListLoading = true
+            axios({
+                url: '/findStockTable',
+                method: 'post',
+                data: {
+                    keyword: query
+                },
+                headers: { 'content-type': 'application/json' }
+            }).then(res => {
+                this.reportList = res.data
+                this.dataListLoading = false
+            }).catch(() => {
+                this.reportList = []
+                this.dataListLoading = false
+            })
+        },
         startQuery () {
             this.pageNum = 1
             this.getDataList()
         },
         clear () {
-            this.dataForm = {
-                gpmc:'',
-                gpdm:'',
-                gplx:'',
-            }
+            this.dataForm = dataFormInit
             this.startQuery()
         },
         getDataList () {
@@ -217,10 +282,10 @@ export default {
             console.log(column)
             if(column.order==='ascending'){
                 this.order = 'asc'
-                this.orderField = '`'+column.prop+'`'
+                this.orderField = column.prop
             } else if(column.order==='descending'){
                 this.order = 'desc'
-                this.orderField = '`'+column.prop+'`'
+                this.orderField = column.prop
             } else {
                 this.order = ''
                 this.orderField = ''
