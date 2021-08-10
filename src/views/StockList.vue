@@ -80,8 +80,8 @@
         </el-form>
         <el-row>
             <el-col>
-                <el-table ref="multipleTable" :data="dataList" height="650" tooltip-effect="dark" style="width: 100%"
-                    @selection-change="handleSelectionChange" @sort-change="changeTableSort">
+                <el-table ref="multipleTable" :data="dataList" height="635" tooltip-effect="dark" style="width: 100%"
+                    v-loading="dataListLoading" @selection-change="handleSelectionChange" @sort-change="changeTableSort">
                     <el-table-column type="selection" width="50">
                     </el-table-column>
                     <el-table-column prop="gpdm" label="股票代码" sortable="true" width="100" >
@@ -268,11 +268,11 @@ export default {
         },
         toggleSelection(rows) {
             if (rows) {
-            rows.forEach(row => {
-                this.$refs.multipleTable.toggleRowSelection(row);
-            });
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
             } else {
-            this.$refs.multipleTable.clearSelection();
+                this.$refs.multipleTable.clearSelection();
             }
         },
         handleSelectionChange(val) {
