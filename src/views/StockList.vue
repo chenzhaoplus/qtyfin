@@ -193,7 +193,7 @@ export default {
         searchGplx(query){
             this.dataListLoading = true
             axios({
-                url: '/findGplxAll',
+                url: this.$global.apiUrl.BasicInfoApi + '/findGplxAll',
                 method: 'post',
                 data: {
                     gplx: query
@@ -210,7 +210,7 @@ export default {
         searchGpReport(query){
             this.dataListLoading = true
             axios({
-                url: '/findStockTable',
+                url: this.$global.apiUrl.BasicInfoApi + '/findStockTable',
                 method: 'post',
                 data: {
                     keyword: query
@@ -235,7 +235,7 @@ export default {
         getDataList () {
             this.dataListLoading = true
             axios({
-                url: '/findStockBySql',
+                url: this.$global.apiUrl.BasicInfoApi + '/findStockBySql',
                 method: 'post',
                 data: {
                     order: this.order,
