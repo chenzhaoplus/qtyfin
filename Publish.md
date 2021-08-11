@@ -4,6 +4,11 @@
 ![image](https://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/AB1E7810B61141E2AC875CFB34079CDB/26947)
 
 
+# boot in ide
+```
+yarn run dev
+```
+
 # package
 ```
 yarn run build
