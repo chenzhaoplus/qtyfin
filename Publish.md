@@ -1,3 +1,9 @@
+# page like this
+***Stock Statistics***
+
+![image](https://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/AB1E7810B61141E2AC875CFB34079CDB/26947)
+
+
 # package
 ```
 yarn run build
@@ -47,3 +53,6 @@ server {
     }
 }
 ```
+
+# backend
+visit [https://github.com/chenzhaoplus/qty_fin](https://github.com/chenzhaoplus/qty_fin)
