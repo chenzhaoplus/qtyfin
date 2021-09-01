@@ -181,10 +181,8 @@ export default {
     },
     created: function () { 
         console.log('from stocklist')
-        this.getDataList()
-        this.gplxList = this.searchGplx('')
-        this.reportList = this.searchGpReport('')
-        this.dataForm['gp_report'] = this.reportList[0]
+        this.searchGplx('')
+        this.searchGpReport('')
     },
     methods: {
         currentSel(selVal) {
@@ -218,6 +216,8 @@ export default {
                 headers: { 'content-type': 'application/json' }
             }).then(res => {
                 this.reportList = res.data
+                this.dataForm['gp_report'] = res.data[0]
+                this.getDataList()
                 this.dataListLoading = false
             }).catch(() => {
                 this.reportList = []
