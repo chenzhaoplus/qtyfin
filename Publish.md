@@ -1,7 +1,7 @@
 # page like this
 ***Stock Statistics***
 
-![image](https://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/AB1E7810B61141E2AC875CFB34079CDB/26947)
+![image](http://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/AB1E7810B61141E2AC875CFB34079CDB/26947)
 
 
 # boot in ide
@@ -20,7 +20,7 @@ visit [How to install nginx](https://github.com/chenzhaoplus/linux-scripts/tree/
 
 
 # publish your code in nginx
-![image](https://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/754A23C9D13F4361BFD576EE2CC09BD9/26945)
+![image](http://note.youdao.com/yws/public/resource/635a3b759d31135cbd682b30242bbf8b/xmlnote/754A23C9D13F4361BFD576EE2CC09BD9/26945)
 
 
 # add nginx server config
